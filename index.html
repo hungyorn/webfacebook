@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tin tức hôm nay</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    h1 {
+      background-color: #007bff;
+      color: white;
+      padding: 20px;
+      margin: 0;
+    }
+    .content {
+      padding: 20px;
+    }
+    a.button {
+      display: inline-block;
+      margin-top: 20px;
+      background-color: #007bff;
+      color: white;
+      padding: 12px 20px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+    a.button:hover {
+      background-color: #0056b3;
+    }
+
+    /* popup */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.6s ease;
+    }
+    .popup img {
+      max-width: 90%;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      background: #fff;
+      border: none;
+      font-size: 22px;
+      border-radius: 50%;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+    .hide {
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tin tức mới nhất hôm nay</h1>
+  <div class="content">
+    <p><strong>🔥 Bài viết nổi bật:</strong> Cập nhật tin tức mỗi ngày</p>
+    <img src="https://via.placeholder.com/300x150?text=Ảnh+minh+họa" alt="Ảnh minh họa">
+    <p>Đọc thêm tin mới tại liên kết dưới đây:</p>
+
+    <!-- Nút mở trong Facebook sẽ báo "rời khỏi ứng dụng" -->
+    <a class="button" href="intent://tintuc24h-hongbienmoi-vn.github.io/webfacebook/#Intent;scheme=https;package=com.android.chrome;end">
+      Tiếp tục xem
+    </a>
+  </div>
+
+  <!-- popup -->
+  <div class="popup" id="popup">
+    <button class="close-btn" id="closeBtn">×</button>
+    <img id="popupImg" src="" alt="Quảng cáo">
+  </div>
+
+  <script>
+    const popup = document.getElementById("popup");
+    const popupImg = document.getElementById("popupImg");
+    const closeBtn = document.getElementById("closeBtn");
+
+    function redirect(url) {
+      window.location.href = url;
+    }
+
+    let stage = localStorage.getItem("stage") || "start";
+
+    function showPopup() {
+      if (stage === "start") {
+        popupImg.src = "shopee.jpg"; // ảnh Shopee
+        popup.style.display = "flex";
+      } else if (stage === "tiktok") {
+        popupImg.src = "tiktok.jpg"; // ảnh TikTok
+        popup.style.display = "flex";
+      } else {
+        popup.style.display = "none";
+      }
+    }
+
+    showPopup();
+
+    closeBtn.onclick = () => {
+      popup.classList.add("hide");
+      setTimeout(() => {
+        popup.classList.remove("hide");
+        popup.style.display = "none";
+
+        if (stage === "start") {
+          localStorage.setItem("stage", "tiktok");
+          redirect("https://s.shopee.vn/9AFwOkhPfg");
+        } else if (stage === "tiktok") {
+          localStorage.setItem("stage", "done");
+          redirect("https://vt.tiktok.com/ZSHv3umBcrxHj-ANnIX/");
+        }
+      }, 600);
+    };
+  </script>
+</body>
+</html>
